@@ -24,10 +24,12 @@ if [ "${ID}" != "centos" ]; then
 fi
 
 basic_optimization() {
-    timedatectl set-ntp true # 启用 NTP 服务
-    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 将时区设为“亚洲/上海”
-    hwclock --systohc # 将硬件时钟调整到与当前系统时间一致
-    date -R # 以 RFC 5322 格式输出日期和时间。例如 Mon, 18 Jan 2021 11:04:16 +0800
+    # 将硬件时钟调整到与当前系统时间一致
+    timedatectl set-ntp true
+    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    hwclock --systohc
+    date -R
+
     # 最大文件打开数
     sed -i '/^\*\ *soft\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
     sed -i '/^\*\ *hard\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
@@ -45,7 +47,7 @@ basic_optimization() {
 install_opt() {
     yum -y upgrade
     yum install -y nginx net-tools unzip
-    bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+    bash <(curl -L https://raw.githubusercontent.com/volunteercai/v2ray-install/main/install-release.sh)
     bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
 }
 
@@ -55,7 +57,7 @@ config() {
     curl -L https://raw.githubusercontent.com/volunteercai/v2ray-install/main/v2ray_config.json > /usr/local/etc/v2ray/config.json
 
     sed -i 's/^{WS_PATH}/$WS_PATH/' /usr/local/etc/v2ray/config.json
-    sed -i 's/^{UUID}/$UUID' /usr/local/etc/v2ray/config.json
+    sed -i 's/^{UUID}/$UUID/' /usr/local/etc/v2ray/config.json
 
     curl -L https://raw.githubusercontent.com/volunteercai/v2ray-install/main/nginx.conf > /etc/nginx/nginx.conf
     curl -L https://raw.githubusercontent.com/volunteercai/v2ray-install/main/2ray.conf > /etc/nginx/conf.d/2ray.conf
