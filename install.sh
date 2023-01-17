@@ -49,22 +49,23 @@ install_opt() {
     bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
 }
 
-# https://raw.githubusercontent.com/wulabing/V2Ray_ws-tls_bash_onekey/master/install.sh
+# https://raw.githubusercontent.com/volunteercai/v2ray-install/main/install.sh
 
 config() {
-    cat ./v2ray_config.json > /usr/local/etc/v2ray/config.json
+    curl -L https://raw.githubusercontent.com/volunteercai/v2ray-install/main/v2ray_config.json > /usr/local/etc/v2ray/config.json
 
     sed -i 's/^{WS_PATH}/$WS_PATH/'/usr/local/etc/v2ray/config.json
     sed -i 's/^{UUID}/$UUID'/usr/local/etc/v2ray/config.json
 
-    cat ./nginx.conf > /etc/nginx/nginx.conf
-    cat ./2ray.conf > /etc/nginx/conf.d/2ray.conf
+    curl -L https://raw.githubusercontent.com/volunteercai/v2ray-install/main/nginx.conf > /etc/nginx/nginx.conf
+    curl -L https://raw.githubusercontent.com/volunteercai/v2ray-install/main/2ray.conf > /etc/nginx/conf.d/2ray.conf
 
     sed -i 's/{server_name}/$domain/g' /etc/nginx/conf.d/2ray.conf
 
+    wget https://raw.githubusercontent.com/volunteercai/v2ray-install/main/2048.zip ./2048.zip
     unzip ./2048.zip
 
-    mv 2048 /usr/local/etc/v2ray/www/
+    mv ./2048 /usr/local/etc/v2ray/www/
 }
 
 basic_optimization
