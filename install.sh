@@ -54,8 +54,8 @@ install_opt() {
 config() {
     curl -L https://raw.githubusercontent.com/volunteercai/v2ray-install/main/v2ray_config.json > /usr/local/etc/v2ray/config.json
 
-    sed -i 's/^{WS_PATH}/$WS_PATH/'/usr/local/etc/v2ray/config.json
-    sed -i 's/^{UUID}/$UUID'/usr/local/etc/v2ray/config.json
+    sed -i 's/^{WS_PATH}/$WS_PATH/' /usr/local/etc/v2ray/config.json
+    sed -i 's/^{UUID}/$UUID' /usr/local/etc/v2ray/config.json
 
     curl -L https://raw.githubusercontent.com/volunteercai/v2ray-install/main/nginx.conf > /etc/nginx/nginx.conf
     curl -L https://raw.githubusercontent.com/volunteercai/v2ray-install/main/2ray.conf > /etc/nginx/conf.d/2ray.conf
