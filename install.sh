@@ -70,14 +70,25 @@ config() {
     mkdir -p /etc/nginx/ssl/
     wget https://raw.githubusercontent.com/volunteercai/v2ray-install/main/cloudflare.pem ./cloudflare.pem
     mv ./cloudflare.pem /etc/nginx/ssl/
+
+    read -r -p "请确认秘钥文件 /etc/nginx/ssl/cert.pem /etc/nginx/ssl/cert.key 已存在？[Y/n] " input
+    case $input in
+        [yY][eE][sS]|[yY])
+            systemctl enable v2ray && systemctl enable nginx && systemctl restart v2ray && systemctl restart nginx
+            ;;
+
+        [nN][oO]|[nN])
+            echo "手动复制后执行下列脚本"
+            echo "systemctl enable v2ray && systemctl enable nginx && systemctl restart v2ray && systemctl restart nginx"
+            ;;
+
+        *)
+            echo "Invalid input..."
+            exit 1
+            ;;
+    esac
 }
 
 basic_optimization
 install_opt
 config
-
-systemctl enable v2ray
-systemctl enable nginx
-
-systemctl restart v2ray
-systemctl restart nginx
