@@ -62,10 +62,14 @@ config() {
 
     sed -i 's/{server_name}/$domain/g' /etc/nginx/conf.d/2ray.conf
 
+    mkdir -p /usr/local/etc/v2ray/www/
     wget https://raw.githubusercontent.com/volunteercai/v2ray-install/main/2048.zip ./2048.zip
     unzip ./2048.zip
-
     mv ./2048 /usr/local/etc/v2ray/www/
+
+    mkdir -p /etc/nginx/ssl/
+    wget https://raw.githubusercontent.com/volunteercai/v2ray-install/main/cloudflare.pem ./cloudflare.pem
+    mv ./cloudflare.pem /etc/nginx/ssl/
 }
 
 basic_optimization
